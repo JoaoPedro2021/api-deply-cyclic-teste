@@ -2,12 +2,14 @@ import { Router } from "express";
 import { UserController } from "./controllers/UserController";
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { authOwnerUser } from "./middlewares/authOwnerUser";
+import { validate } from "./middlewares/validateZod";
+import { userSchema } from "./schemas/userSchema";
 
 
 const routes = Router();
 
 
-routes.post('/user', new UserController().create)
+routes.post('/user', validate(userSchema), new UserController().create)
 
 routes.post('/login', new UserController().login)
 
